@@ -8,6 +8,9 @@
             var basePaths = window.location.pathname.split("/");
             basePaths.pop();
             var basePath = basePaths.join("/");
+            if(basePath === "") {
+                basePath = "/";
+            }
 
             function publish() {
                 var data = $('#data').val();
@@ -30,7 +33,7 @@
                     if(window.location.protocol == "https:") {
                         scheme = "wss:";
                     }
-                    webSocket = new WebSocket(`${scheme}//${window.location.host}/${basePath}/subscribe/${topic}`);
+                    webSocket = new WebSocket(`${scheme}//${window.location.host}${basePath}/subscribe/${topic}`);
                     webSocket.onmessage = function(event) {
                         var tr = $('<tr/>');
                         tr.append(`<td>${(new Date()).toTimeString()}</td>`);
